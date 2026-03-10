@@ -2,8 +2,7 @@
 
 import csv
 from pathlib import Path
-from typing import Optional
-
+from typing import Optional  # noqa: UP035
 
 # CMS ICD-10-CM code range → MDC mapping (public domain, CMS definitions manual).
 # format: (range_start, range_end, mdc)

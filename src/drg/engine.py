@@ -2,6 +2,9 @@
 
 from typing import Optional
 
+from drg.classifier import MDCClassifier
+from drg.complications import ComplicationResolver
+from drg.registry import CodeRegistry
 from drg.schemas import (
     ComplicationLevel,
     Diagnosis,
@@ -11,9 +14,6 @@ from drg.schemas import (
     Procedure,
     Sex,
 )
-from drg.registry import CodeRegistry
-from drg.complications import ComplicationResolver
-from drg.classifier import MDCClassifier
 
 
 class MSDRGEngine:
@@ -313,7 +313,10 @@ class MSDRGEngine:
 
         best = self._best_severity_match(candidates, comp)
         if best:
-            return best.drg_code, best.description, best.weight, best.geometric_los, best.arithmetic_los
+            return (
+                best.drg_code, best.description, best.weight,
+                best.geometric_los, best.arithmetic_los,
+            )
 
         return "999", "UNGROUPABLE", 0.0, None, None
 
@@ -418,8 +421,14 @@ class MSDRGEngine:
         # coronary stent / angioplasty (percutaneous dilation)
         if sec == "0" and bsys == "2" and rop == "7" and approach == "3":
             if device in ("D", "E", "T"):
-                return ("321", "322", "PERCUTANEOUS CARDIOVASCULAR PROCEDURES WITH INTRALUMINAL DEVICE")
-            return ("250", "251", "PERCUTANEOUS CARDIOVASCULAR PROCEDURES WITHOUT INTRALUMINAL DEVICE")
+                return (
+                    "321", "322",
+                    "PERCUTANEOUS CARDIOVASCULAR PROCEDURES WITH INTRALUMINAL DEVICE",
+                )
+            return (
+                "250", "251",
+                "PERCUTANEOUS CARDIOVASCULAR PROCEDURES WITHOUT INTRALUMINAL DEVICE",
+            )
 
         # coronary bypass
         if sec == "0" and bsys == "2" and rop == "1":
