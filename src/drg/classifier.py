@@ -98,13 +98,9 @@ _PDX_MDC_MAP: list[tuple[str, str, str]] = [
 
     # mdc 14 — pregnancy, childbirth, puerperium
     ("O00", "O9A", "14"),
-    ("Z33", "Z339", "14"),
-    ("Z34", "Z349", "14"),
-    ("Z3A", "Z3A49", "14"),
 
     # mdc 15 — newborns and neonates
     ("P00", "P96", "15"),
-    ("Z38", "Z389", "15"),
 
     # mdc 16 — blood, blood-forming organs, immunological
     ("D50", "D89", "16"),
@@ -135,9 +131,19 @@ _PDX_MDC_MAP: list[tuple[str, str, str]] = [
     # mdc 23 — factors influencing health status
     ("Z00", "Z99", "23"),
 
-    # mdc 25 — HIV
+    # --- specific overrides (must come after broad ranges) ---
+
+    # mdc 25 — HIV (overrides A00-B99 and Z00-Z99)
     ("B20", "B20", "25"),
     ("Z21", "Z21", "25"),
+
+    # mdc 14 — pregnancy Z-codes (overrides Z00-Z99)
+    ("Z33", "Z339", "14"),
+    ("Z34", "Z349", "14"),
+    ("Z3A", "Z3A49", "14"),
+
+    # mdc 15 — newborn Z-codes (overrides Z00-Z99)
+    ("Z38", "Z389", "15"),
 ]
 
 
