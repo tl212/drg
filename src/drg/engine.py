@@ -4,7 +4,7 @@ from typing import Optional
 
 from drg.classifier import MDCClassifier
 from drg.complications import ComplicationResolver
-from drg.registry import CodeRegistry
+from drg.registry import CodeRegistry, DRGReference
 from drg.schemas import (
     ComplicationLevel,
     Diagnosis,
@@ -485,7 +485,9 @@ class MSDRGEngine:
     # ------------------------------------------------------------------
 
     @staticmethod
-    def _best_severity_match(candidates: list, comp: ComplicationLevel):
+    def _best_severity_match(
+        candidates: list["DRGReference"], comp: ComplicationLevel,
+    ) -> Optional["DRGReference"]:
         """scan DRG candidates by description keywords to match complication level."""
         keywords = {
             ComplicationLevel.MCC: ["WITH MCC", "W MCC"],
